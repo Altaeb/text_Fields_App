@@ -16,12 +16,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textField1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var textField3: UITextField!
+    @IBOutlet weak var textField4: UITextField!
+    @IBOutlet weak var textField5: UITextField!
+    @IBOutlet weak var textField6: UITextField!
+    @IBOutlet weak var editingSwitch: UISwitch!
     @IBOutlet weak var characterCountLabel: UILabel!
     
     // MARK: Text Field Delegate objects
     let emojiDelegate = EmojiTextFieldDelegate()
     let colorizerDelegate = ColorizerTextFieldDelegate()
     let randomColorTextFieldDelegate = RandomColorTextFieldDelegate()
+    let cashTextFieldDelegate = CashTextFieldDelegate()
+    let zipCodeTextFieldDelegate = ZipCodeTextFieldDelegate()
     
     // MARK: Life Cycle
     
@@ -33,8 +39,34 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // Set the three delegates
         self.textField1.delegate = emojiDelegate
-        self.textField2.delegate = randomColorTextFieldDelegate
+        self.textField2.delegate = colorizerDelegate
         self.textField3.delegate = self
+        self.textField4.delegate = zipCodeTextFieldDelegate
+        self.textField5.delegate = cashTextFieldDelegate
+        self.textField6.delegate = randomColorTextFieldDelegate
+        
+        self.editingSwitch.setOn(false, animated: false)
+    }
+    
+    // MARK: Text Field Delegate
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return self.editingSwitch.isOn
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+           
+        return true;
+    }
+    
+    // MARK: Actions
+       
+    @IBAction func toggleTheTextEditor(_ sender: AnyObject) {
+           
+        if !(sender as! UISwitch).isOn {
+            self.textField3.resignFirstResponder()
+        }
     }
     
     // MARK: Text Field Delegate Methods
